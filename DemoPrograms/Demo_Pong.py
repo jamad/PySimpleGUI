@@ -74,26 +74,22 @@ class Ball:
 
 
 class pongbat():
-    def __init__(self, canvas, color):
+    def __init__(self, canvas, color,x=40,y=25):
         self.canvas = canvas
-        self.id = self.canvas.create_rectangle(40, 200, 25, 310, fill=color)
+        self.id = self.canvas.create_rectangle(x, 200, y, 310, fill=color)
         self.canvas_height = self.canvas.winfo_height()
         self.canvas_width = self.canvas.winfo_width()
         self.y = 0
 
-    def up(self, evt):
-        self.y = -5
+    def up(self, evt):self.y = -5
 
-    def down(self, evt):
-        self.y = 5
+    def down(self, evt):self.y = 5
 
     def draw(self):
         self.canvas.move(self.id, 0, self.y)
         pos = self.canvas.coords(self.id)
-        if pos[1] <= 0:
-            self.y = 0
-        if pos[3] >= 400:
-            self.y = 0
+        if pos[1] <= 0:self.y = 0
+        if pos[3] >= 400:self.y = 0
 
 
 class pongbat2():
@@ -120,51 +116,32 @@ class pongbat2():
 
 
 # ------------- Define GUI layout -------------
-L = [[Canvas(size=(700, 400),
-                        background_color='black',
-                        key='canvas')],
-            [Text(''), Button('Quit')]]
-# ------------- Create window -------------
-W = Window('The Classic Game of Pong', L,
-                    return_keyboard_events=True, finalize=True)
+L = [[Canvas(size=(700, 400),background_color='black', key='canvas')],[Text(''), Button('Quit')]]
+W = Window('The Classic Game of Pong', L,return_keyboard_events=True, finalize=True)
 
 canvas = W['canvas'].TKCanvas
-
 # ------------- Create line down center, the bats and ball -------------
 canvas.create_line(350, 0, 350, 400, fill='white')
-bat1 = pongbat(canvas, 'white')
-bat2 = pongbat2(canvas, 'white')
-ball1 = Ball(canvas, bat1, bat2, 'green')
+P = pongbat(canvas, 'orange')
+Q = pongbat2(canvas, 'magenta')
+B = Ball(canvas, P, Q, 'white')
 
-# ------------- Event Loop -------------
-while True:
-    # ------------- Draw ball and bats -------------
-    ball1.draw()
-    bat1.draw()
-    bat2.draw()
+while 1:# ------------- Event Loop -------------
+    B.draw()
+    P.draw()
+    Q.draw()
 
-    # ------------- Read the form, get keypresses -------------
-    event, values = W.read(timeout=0)
-    # ------------- If quit  -------------
-    if event is None or event == 'Quit':
-        break
-    # ------------- Keypresses -------------
-    if event is not None:
-        if event.startswith('Up'):
-            bat2.up(2)
-        elif event.startswith('Down'):
-            bat2.down(2)
-        elif event == 'w':
-            bat1.up(1)
-        elif event == 's':
-            bat1.down(1)
-
-    if ball1.checkwin():
-        Popup('Game Over', ball1.checkwin() + ' won!!')
+    E,_= W.read(timeout=0)
+    if E in(None,'Quit'):break
+    if E is not None:
+        if E.startswith('Up'):      Q.up(2)
+        elif E.startswith('Down'):  Q.down(2)
+        elif E == 'w':              P.up(1)
+        elif E == 's':              P.down(1)
+    if B.checkwin():
+        Popup('Game Over', B.checkwin() + ' won!!')
         break
 
-    # ------------- Bottom of loop, delay between animations -------------
-    # time.sleep(.01)
     canvas.after(10)
 
 W.close()
