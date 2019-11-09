@@ -18,45 +18,29 @@ class Ball:
         self.x = random.choice([-2.5, 2.5])
         self.y = -2.5
 
-    def checkwin(self):
-        winner = None
-        if self.playerScore >= 10:
-            winner = 'Player left wins'
-        if self.player1Score >= 10:
-            winner = 'Player Right'
-        return winner
+    def checkwin(self):return self.playerScore >= 10 and 'Player left'or self.player1Score >= 10 and 'Player Right'or None
 
     def updatep(self, val):
         self.canvas.delete(self.drawP)
-        self.drawP = self.canvas.create_text(170, 50, font=(
-            'freesansbold.ttf', 40), text=str(val), fill='white')
+        self.drawP = self.canvas.create_text(170, 50, font=('freesansbold.ttf', 40), text=str(val), fill='white')
 
     def updatep1(self, val):
         self.canvas.delete(self.drawP1)
-        self.drawP1 = self.canvas.create_text(550, 50, font=(
-            'freesansbold.ttf', 40), text=str(val), fill='white')
+        self.drawP1 = self.canvas.create_text(550, 50, font=('freesansbold.ttf', 40), text=str(val), fill='white')
 
     def hit_bat(self, pos):
         bat_pos = self.canvas.coords(self.bat.id)
-        if pos[2] >= bat_pos[0] and pos[0] <= bat_pos[2]:
-            if pos[3] >= bat_pos[1] and pos[3] <= bat_pos[3]:
-                return True
-            return False
+        if pos[2] >= bat_pos[0] and pos[0] <= bat_pos[2]:return pos[3] >= bat_pos[1] and pos[3] <= bat_pos[3]
 
     def hit_bat2(self, pos):
         bat_pos = self.canvas.coords(self.bat2.id)
-        if pos[2] >= bat_pos[0] and pos[0] <= bat_pos[2]:
-            if pos[3] >= bat_pos[1] and pos[3] <= bat_pos[3]:
-                return True
-            return False
+        if pos[2] >= bat_pos[0] and pos[0] <= bat_pos[2]:return pos[3] >= bat_pos[1] and pos[3] <= bat_pos[3]
 
     def draw(self):
         self.canvas.move(self.id, self.x, self.y)
         pos = self.canvas.coords(self.id)
-        if pos[1] <= 0:
-            self.y = 4
-        if pos[3] >= self.canvas_height:
-            self.y = -4
+        if pos[1] <= 0:self.y = 4
+        if pos[3] >= self.canvas_height:self.y = -4
         if pos[0] <= 0:
             self.player1Score += 1
             self.canvas.move(self.id, 327, 220)
@@ -67,10 +51,8 @@ class Ball:
             self.canvas.move(self.id, -327, -220)
             self.x = -4
             self.updatep(self.playerScore)
-        if self.hit_bat(pos):
-            self.x = 4
-        if self.hit_bat2(pos):
-            self.x = -4
+        if self.hit_bat(pos):self.x = 4
+        if self.hit_bat2(pos):self.x = -4
 
 
 class pongbat():
@@ -80,7 +62,6 @@ class pongbat():
         self.canvas_height = self.canvas.winfo_height()
         self.canvas_width = self.canvas.winfo_width()
         self.y = 0
-
     def up(self, evt):self.y = -5
     def down(self, evt):self.y = 5
     def draw(self):
@@ -115,7 +96,5 @@ while 1:# ------------- Event Loop -------------
     if B.checkwin():
         Popup('Game Over', B.checkwin() + ' won!!')
         break
-
     canvas.after(10)
-
 W.close()
