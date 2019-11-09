@@ -1,15 +1,6 @@
-#!/usr/bin/env python
-import PySimpleGUI as sg
-
-import random
-import time
-
-
-"""
-    Pong code supplied by Daniel Young (Neonzz)
-    Modified.  Original code: https://www.pygame.org/project/3649/5739
-"""
-
+from PySimpleGUI import Canvas,Window,Popup,Text,Button
+import random, time
+#   Pong Original code: https://www.pygame.org/project/3649/5739
 
 class Ball:
     def __init__(self, canvas, bat, bat2, color):
@@ -128,56 +119,52 @@ class pongbat2():
             self.y = 0
 
 
-def pong():
-    # ------------- Define GUI layout -------------
-    layout = [[sg.Canvas(size=(700, 400),
-                         background_color='black',
-                         key='canvas')],
-              [sg.Text(''), sg.Button('Quit')]]
-    # ------------- Create window -------------
-    window = sg.Window('The Classic Game of Pong', layout,
-                       return_keyboard_events=True, finalize=True)
+# ------------- Define GUI layout -------------
+L = [[Canvas(size=(700, 400),
+                        background_color='black',
+                        key='canvas')],
+            [Text(''), Button('Quit')]]
+# ------------- Create window -------------
+W = Window('The Classic Game of Pong', L,
+                    return_keyboard_events=True, finalize=True)
 
-    canvas = window['canvas'].TKCanvas
+canvas = W['canvas'].TKCanvas
 
-    # ------------- Create line down center, the bats and ball -------------
-    canvas.create_line(350, 0, 350, 400, fill='white')
-    bat1 = pongbat(canvas, 'white')
-    bat2 = pongbat2(canvas, 'white')
-    ball1 = Ball(canvas, bat1, bat2, 'green')
+# ------------- Create line down center, the bats and ball -------------
+canvas.create_line(350, 0, 350, 400, fill='white')
+bat1 = pongbat(canvas, 'white')
+bat2 = pongbat2(canvas, 'white')
+ball1 = Ball(canvas, bat1, bat2, 'green')
 
-    # ------------- Event Loop -------------
-    while True:
-        # ------------- Draw ball and bats -------------
-        ball1.draw()
-        bat1.draw()
-        bat2.draw()
+# ------------- Event Loop -------------
+while True:
+    # ------------- Draw ball and bats -------------
+    ball1.draw()
+    bat1.draw()
+    bat2.draw()
 
-        # ------------- Read the form, get keypresses -------------
-        event, values = window.read(timeout=0)
-        # ------------- If quit  -------------
-        if event is None or event == 'Quit':
-            break
-        # ------------- Keypresses -------------
-        if event is not None:
-            if event.startswith('Up'):
-                bat2.up(2)
-            elif event.startswith('Down'):
-                bat2.down(2)
-            elif event == 'w':
-                bat1.up(1)
-            elif event == 's':
-                bat1.down(1)
+    # ------------- Read the form, get keypresses -------------
+    event, values = W.read(timeout=0)
+    # ------------- If quit  -------------
+    if event is None or event == 'Quit':
+        break
+    # ------------- Keypresses -------------
+    if event is not None:
+        if event.startswith('Up'):
+            bat2.up(2)
+        elif event.startswith('Down'):
+            bat2.down(2)
+        elif event == 'w':
+            bat1.up(1)
+        elif event == 's':
+            bat1.down(1)
 
-        if ball1.checkwin():
-            sg.popup('Game Over', ball1.checkwin() + ' won!!')
-            break
+    if ball1.checkwin():
+        Popup('Game Over', ball1.checkwin() + ' won!!')
+        break
 
-        # ------------- Bottom of loop, delay between animations -------------
-        # time.sleep(.01)
-        canvas.after(10)
+    # ------------- Bottom of loop, delay between animations -------------
+    # time.sleep(.01)
+    canvas.after(10)
 
-    window.close()
-
-if __name__ == '__main__':
-    pong()
+W.close()
