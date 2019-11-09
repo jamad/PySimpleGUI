@@ -33,7 +33,7 @@ class Ball:
             self.score2 += 1
             self.C.move(self.id, 327, 220)
             self.x = 4
-#           self.scoreText1.text=str(self.score2) # this doesn't work but the following works
+#           self.scoreText1.text=str(self.score2) # this doesn't work but itemconfigure works
 #           https://stackoverflow.com/questions/55731450/how-to-create-text-on-a-tkinter-canvas-and-change-the-text-in-the-canvas
             self.C.itemconfigure(self.scoreText1, text=str(self.score2))
         if c >= self.C.winfo_width():# ball escaped right
@@ -72,9 +72,6 @@ while 1:# ------------- Event Loop -------------
     
     E,_= W.read(timeout=0)
     if E in(None,'Quit'):break
-    if 'TIMEOUT' not in E:print(E)
-#    Q.mv(E.startswith('Up')and -5 or E.startswith('Down')and 5)
-#    P.mv(E == 'w' and -5 or E == 's' and 5)
     if 'Up'in E:      Q.mv(-5)
     elif 'Down'in E:  Q.mv(5)
     elif E == 'w':    P.mv(-5)
@@ -82,5 +79,5 @@ while 1:# ------------- Event Loop -------------
     if B.checkwin():
         Popup('Game Over', B.checkwin() + ' won!!')
         break
-    C.after(10)
+    C.after(10) # 1: very fast unplayable  100:very slow unplayable
 W.close()
