@@ -9,32 +9,32 @@ class Ball:
         self.bat2 = bat2
         self.id = self.C.create_oval(10, 10, 35, 35, fill=color)
 
-        self.score1 = 0
-        self.score2 = 0
-        self.drawP1 = None
-        self.drawP = None
+        self.score1 = self.score2 = 0
+        self.drawPlayer1 = self.drawPlayer2= None
 
         self.C.move(self.id, 327, 220)
-        self.x = random.choice([-2.5, 2.5])
-        self.y = -2.5
+        self.x=random.choice([-2.5, 2.5])
+        self.y=-2.5
 
     def checkwin(self):return self.score1 >= 10 and 'Player left'or self.score2 >= 10 and 'Player Right'or None
 
     def updatep(self, val):
-        self.C.delete(self.drawP)
-        self.drawP = self.C.create_text(170, 50, font=('freesansbold.ttf', 40), text=str(val), fill='white')
+        self.C.delete(self.drawPlayer2)
+        self.drawPlayer2= self.C.create_text(170, 50, font=('freesansbold.ttf', 40), text=str(val), fill='orange')
 
     def updatep1(self, val):
-        self.C.delete(self.drawP1)
-        self.drawP1 = self.C.create_text(550, 50, font=('freesansbold.ttf', 40), text=str(val), fill='white')
+        self.C.delete(self.drawPlayer1)
+        self.drawPlayer1 = self.C.create_text(550, 50, font=('freesansbold.ttf', 40), text=str(val), fill='magenta')
 
-    def hit_bat(self, pos):
-        bat_pos = self.C.coords(self.bat.id)
-        if pos[2] >= bat_pos[0] and pos[0] <= bat_pos[2]:return pos[3] >= bat_pos[1] and pos[3] <= bat_pos[3]
+    def hit_bat(self, P):
+        BP = self.C.coords(self.bat.id)
+        if BP[0] <= P[2] and P[0] <= BP[2]:
+            return BP[1] <= P[3] <= BP[3]
 
-    def hit_bat2(self, pos):
-        bat_pos = self.C.coords(self.bat2.id)
-        if pos[2] >= bat_pos[0] and pos[0] <= bat_pos[2]:return pos[3] >= bat_pos[1] and pos[3] <= bat_pos[3]
+    def hit_bat2(self, P):
+        BP = self.C.coords(self.bat2.id)
+        if BP[0] <= P[2] and P[0] <= BP[2]:
+            return BP[1] <= P[3] <= BP[3]
 
     def draw(self):
         self.C.move(self.id, self.x, self.y)
