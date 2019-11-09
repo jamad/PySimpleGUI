@@ -7,18 +7,18 @@ class Ball:
         self.C = canvas
         self.bat = bat
         self.bat2 = bat2
-        self.playerScore = 0
-        self.player1Score = 0
+        self.id = self.C.create_oval(10, 10, 35, 35, fill=color)
+
+        self.score1 = 0
+        self.score2 = 0
         self.drawP1 = None
         self.drawP = None
-        self.id = self.C.create_oval(10, 10, 35, 35, fill=color)
+
         self.C.move(self.id, 327, 220)
-        self.C_height = self.C.winfo_height()
-        self.C_width = self.C.winfo_width()
         self.x = random.choice([-2.5, 2.5])
         self.y = -2.5
 
-    def checkwin(self):return self.playerScore >= 10 and 'Player left'or self.player1Score >= 10 and 'Player Right'or None
+    def checkwin(self):return self.score1 >= 10 and 'Player left'or self.score2 >= 10 and 'Player Right'or None
 
     def updatep(self, val):
         self.C.delete(self.drawP)
@@ -40,20 +40,19 @@ class Ball:
         self.C.move(self.id, self.x, self.y)
         pos = self.C.coords(self.id)
         if pos[1] <= 0:self.y = 4
-        if pos[3] >= self.C_height:self.y = -4
+        if pos[3] >= self.C.winfo_height():self.y = -4
         if pos[0] <= 0:
-            self.player1Score += 1
+            self.score2 += 1
             self.C.move(self.id, 327, 220)
             self.x = 4
-            self.updatep1(self.player1Score)
-        if pos[2] >= self.C_width:
-            self.playerScore += 1
+            self.updatep1(self.score2)
+        if pos[2] >= self.C.winfo_width():
+            self.score1 += 1
             self.C.move(self.id, -327, -220)
             self.x = -4
-            self.updatep(self.playerScore)
+            self.updatep(self.score1)
         if self.hit_bat(pos):self.x = 4
         if self.hit_bat2(pos):self.x = -4
-
 
 class pongbat():
     def __init__(self, canvas, color,x=40,y=25):
@@ -64,7 +63,7 @@ class pongbat():
     def draw(self):
         self.C.move(self.id, 0, self.dy)
         pos = self.C.coords(self.id)
-        if pos[1] <= 0 or 400<=pos[3]:self.dy = 0
+        if pos[1]<=0 or 400<=pos[3]:self.dy = 0 # at the edge
 
 # ------------- Define GUI layout -------------
 L = [[Canvas(size=(700, 400),background_color='black', key='canvas')],[Text(''), Button('Quit')]]
@@ -84,13 +83,13 @@ while 1:# ------------- Event Loop -------------
     
     E,_= W.read(timeout=0)
     if E in(None,'Quit'):break
-
+    if 'TIMEOUT' not in E:print(E)
 #    Q.mv(E.startswith('Up')and -5 or E.startswith('Down')and 5)
 #    P.mv(E == 'w' and -5 or E == 's' and 5)
-    if E.startswith('Up'):      Q.mv(-5)
-    elif E.startswith('Down'):  Q.mv(5)
-    elif E == 'w':              P.mv(-5)
-    elif E == 's':              P.mv(5)
+    if 'Up'in E:      Q.mv(-5)
+    elif 'Down'in E:  Q.mv(5)
+    elif E == 'w':    P.mv(-5)
+    elif E == 's':    P.mv(5)
     if B.checkwin():
         Popup('Game Over', B.checkwin() + ' won!!')
         break
