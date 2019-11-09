@@ -82,38 +82,12 @@ class pongbat():
         self.y = 0
 
     def up(self, evt):self.y = -5
-
     def down(self, evt):self.y = 5
-
     def draw(self):
         self.canvas.move(self.id, 0, self.y)
         pos = self.canvas.coords(self.id)
         if pos[1] <= 0:self.y = 0
         if pos[3] >= 400:self.y = 0
-
-
-class pongbat2():
-    def __init__(self, canvas, color):
-        self.canvas = canvas
-        self.id = self.canvas.create_rectangle(680, 200, 660, 310, fill=color)
-        self.canvas_height = self.canvas.winfo_height()
-        self.canvas_width = self.canvas.winfo_width()
-        self.y = 0
-
-    def up(self, evt):
-        self.y = -5
-
-    def down(self, evt):
-        self.y = 5
-
-    def draw(self):
-        self.canvas.move(self.id, 0, self.y)
-        pos = self.canvas.coords(self.id)
-        if pos[1] <= 0:
-            self.y = 0
-        if pos[3] >= 400:
-            self.y = 0
-
 
 # ------------- Define GUI layout -------------
 L = [[Canvas(size=(700, 400),background_color='black', key='canvas')],[Text(''), Button('Quit')]]
@@ -123,7 +97,7 @@ canvas = W['canvas'].TKCanvas
 # ------------- Create line down center, the bats and ball -------------
 canvas.create_line(350, 0, 350, 400, fill='white')
 P = pongbat(canvas, 'orange')
-Q = pongbat2(canvas, 'magenta')
+Q = pongbat(canvas, 'magenta',680,660)
 B = Ball(canvas, P, Q, 'white')
 
 while 1:# ------------- Event Loop -------------
