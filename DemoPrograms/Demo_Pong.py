@@ -26,33 +26,31 @@ class Ball:
         self.C.delete(self.drawPlayer1)
         self.drawPlayer1 = self.C.create_text(550, 50, font=('freesansbold.ttf', 40), text=str(val), fill='magenta')
 
-    def hit_bat(self, P):
+    def hit_bat(self, a,b,c,d):
         BP = self.C.coords(self.bat.id)
-        if BP[0] <= P[2] and P[0] <= BP[2]:
-            return BP[1] <= P[3] <= BP[3]
+        if BP[0] <= c and a <= BP[2]:return BP[1] <= d <= BP[3]
 
-    def hit_bat2(self, P):
+    def hit_bat2(self, a,b,c,d):
         BP = self.C.coords(self.bat2.id)
-        if BP[0] <= P[2] and P[0] <= BP[2]:
-            return BP[1] <= P[3] <= BP[3]
+        if BP[0] <= c and a <= BP[2]:return BP[1] <= d <= BP[3]
 
     def draw(self):
         self.C.move(self.id, self.x, self.y)
-        pos = self.C.coords(self.id)
-        if pos[1] <= 0:self.y = 4
-        if pos[3] >= self.C.winfo_height():self.y = -4
-        if pos[0] <= 0:
+        a,b,c,d= self.C.coords(self.id)
+        if b <= 0:self.y = 4
+        if d >= self.C.winfo_height():self.y = -4
+        if a <= 0:
             self.score2 += 1
             self.C.move(self.id, 327, 220)
             self.x = 4
             self.updatep1(self.score2)
-        if pos[2] >= self.C.winfo_width():
+        if c >= self.C.winfo_width():
             self.score1 += 1
             self.C.move(self.id, -327, -220)
             self.x = -4
             self.updatep(self.score1)
-        if self.hit_bat(pos):self.x = 4
-        if self.hit_bat2(pos):self.x = -4
+        if self.hit_bat(a,b,c,d):self.x = 4
+        if self.hit_bat2(a,b,c,d):self.x = -4
 
 class pongbat():
     def __init__(self, canvas, color,x=40,y=25):
