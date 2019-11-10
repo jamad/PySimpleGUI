@@ -9,7 +9,7 @@ Paste the youtube link into the GUI. The GUI link is queried when you click Get 
 Get List will populate the pulldown list with the language options available for the video.
 Choose the language to download and click Download
 """
-youtube_executable = 'path/to/youtube-dl'
+youtube_executable = "E:\\downloads\\youtube-dl.exe"  
 
 
 def DownloadSubtitlesGUI():
