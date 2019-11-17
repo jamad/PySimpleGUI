@@ -20,8 +20,9 @@ while True:             # E Loop
     E, V = W.read()
     if E in (None, 'Exit'):break
     if E == '-G-':
-        if V['-G-']==(None,None):continue
-        x,y = V['-G-'][0]//n,V['-G-'][1]//n
+        M=V['-G-']
+        if ==(None,None):continue
+        x,y = M[0]//n,M[1]//n
         if x<h and y<w:
             ch=random.choice(string.ascii_uppercase)
             g.draw_text('{}'.format(ch), (x*n+18,y*n+17), font='Courier 25')
