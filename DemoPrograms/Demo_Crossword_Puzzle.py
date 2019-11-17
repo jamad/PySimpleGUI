@@ -1,14 +1,12 @@
 from PySimpleGUI import Text,Graph,Button,Window
-import random
-import string
-
+import random,string
 #Demo to show how to draw rectangles and letters on a Graph 
 
 w,h=5,5 # BOX_SIZE 
 n = w*h
 L = [[Text('Crossword Puzzle'), Text('', key='-OUTPUT-')],
     [Graph((350, 350), (0, 150), (150, 0), key='-G-',change_submits=True, drag_submits=False)],
-    [Button('Show'), Button('Exit')]]
+    [Button('Exit')]]
 W = Window('Window Title', L, finalize=True)
 g = W['-G-']
 
@@ -20,7 +18,6 @@ for i in range(h):
 
 while True:             # E Loop
     E, V = W.read()
-    print(E, V)
     if E in (None, 'Exit'):break
     if E == '-G-':
         if V['-G-']==(None,None):continue
