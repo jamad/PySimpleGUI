@@ -5,8 +5,8 @@ import random,string
 w,h=5,5 # BOX_SIZE 
 n = w*h
 L = [[Text('Crossword Puzzle'), Text('', key='-OUTPUT-')],
-    [Graph((350, 350), (0, 150), (150, 0), key='-G-',change_submits=True, drag_submits=False)],
-    [Button('Exit')]]
+    [Graph((350, 350), (0, 150), (150, 0), key='-G-',change_submits=True, drag_submits=False)]
+    ]
 W = Window('Window Title', L, finalize=True)
 g = W['-G-']
 
@@ -21,7 +21,7 @@ while True:             # E Loop
     if E in (None, 'Exit'):break
     if E == '-G-':
         M=V['-G-']
-        if ==(None,None):continue
+        if M==(None,None):continue
         x,y = M[0]//n,M[1]//n
         if x<h and y<w:
             ch=random.choice(string.ascii_uppercase)
