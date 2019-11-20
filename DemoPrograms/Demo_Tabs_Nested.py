@@ -13,13 +13,19 @@ TG34=TabGroup([[Tab('Tab3', tab3_L), Tab('Tab 4', tab4_L)]])
 tab5_L = [[Text('Watch this W')] , [Output(size=(40,5))]]
 
 tab6a_L = [[Text('This is inside of a tab')]]
-tab6b_L = [[Text('This is inside of a tab')]]
+tab6b_L = [[Text('This is inside of a tab')]]*10
 TG = TabGroup([[Tab('Tab 7', tab6a_L), Tab('Tab 8', tab6b_L)]])
 tab6_L = [[Text('This is inside tab 6')] , [Text('How about a second row of stuff in tab 6?'), TG]]
 
-L = [[Frame('A Frame', layout=[[TG12, TG34]])],
-    [Text('This text is on a row with a column'),Col(layout=[[Text('In a column')],
-    [TabGroup([[Tab('Tab 5', tab5_L), Tab('Tab 6', tab6_L)]])],[Button('Click me')]])],]
+L = [
+        [Frame('A Frame', layout=[[TG12, TG34]])],
+        [Text('This text is on a row with a column'),
+            Col(layout=[
+                [Text('In a column')],
+                [TabGroup([[Tab('Tab 5', tab5_L), Tab('Tab 6', tab6_L)]])],
+                [Button('Click me')]],scrollable=True)
+        ]
+    ]
 
 W = Window('My W with tabs', L, default_element_size=(12,1), finalize=True)
 print('Are there enough tabs for you?')
