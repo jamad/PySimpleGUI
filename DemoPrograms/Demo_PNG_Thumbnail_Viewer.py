@@ -82,7 +82,7 @@ while True:
     
     for x in range(ROWS):               # update thumbnails
         for y in range(COLUMNS):
-            cur_index = display_index + (x * 4) + y
+            cur_index = int(display_index + (x * 4) + y)
             if cur_index < len(png_files):
                 filename = png_files[cur_index]
                 if filename not in thumbnails:
